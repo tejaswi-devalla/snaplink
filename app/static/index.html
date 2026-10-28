@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f4">
+  <meta name="description" content="A friendly home for your short links. Create, share, track, and manage links with SnapLink.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
+  <title>SnapLink — Links made lighter</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="SnapLink home">
+      <span class="brand-mark" aria-hidden="true"><span>↗</span></span>
+      <span class="brand-name">snap<span>link</span></span>
+    </a>
+    <nav class="top-nav" aria-label="Main navigation">
+      <a href="#how-it-works">How it works</a>
+      <a href="#history-title">My links</a>
+    </nav>
+  </header>
+
+  <main class="layout">
+    <section class="hero-grid" aria-label="Create a short link">
+      <div class="hero">
+        <div class="eyebrow"><span class="sparkle">✳</span> LESS LINK. MORE YOU.</div>
+        <h1>Make long links<br>feel <span class="headline-accent">a little lighter.</span></h1>
+        <p class="hero-copy">A neat little home for the links you share. Make them shorter, see how they’re doing, and keep the important ones close.</p>
+        <div class="hero-points">
+          <span><span class="check-dot">✓</span> No-fuss sharing</span>
+          <span><span class="check-dot">✓</span> Click insights</span>
+          <span><span class="check-dot">✓</span> You’re in control</span>
+        </div>
+
+        <div class="mini-preview" aria-label="Example of a shortened link">
+          <div class="preview-topline"><span class="preview-avatar">s.</span><div><strong>A little link magic</strong><small>A quick before-and-after</small></div><span class="preview-status">LOOKS GOOD <b>✓</b></span></div>
+          <div class="preview-urls"><div class="preview-old"><span>BEFORE</span><div>example.com/articles/this-is-a-really-long-url…</div></div><div class="preview-arrow" aria-hidden="true">→</div><div class="preview-new"><span>AFTER</span><div>snap.link/hello</div></div></div>
+          <div class="preview-footer"><span class="preview-spark">✦</span> Easier to share. Easier to remember.</div>
+        </div>
+      </div>
+
+      <section class="panel create-card" aria-labelledby="form-title">
+        <div class="card-topline"><span class="card-kicker">YOUR NEXT SHORT LINK</span><span class="round-icon" aria-hidden="true">↗</span></div>
+        <h2 id="form-title">Let’s make it shorter.</h2>
+        <p class="card-intro">Drop in the link you want to share. We’ll take it from there.</p>
+        <form id="shorten-form">
+          <label for="url">Your original link</label>
+          <div class="input-with-icon"><span aria-hidden="true">↗</span><input id="url" name="url" type="url" placeholder="https://your-really-long-link.com/..." maxlength="4096" required autocomplete="url"></div>
+
+          <div class="optional-grid">
+            <div>
+              <label for="alias">Make it yours <span class="optional">OPTIONAL</span></label>
+              <div class="alias-input"><span class="alias-prefix">snap.link/</span><input id="alias" name="alias" placeholder="your-name" maxlength="32" pattern="[A-Za-z0-9_-]{4,32}" title="4–32 letters, numbers, underscores, or hyphens" autocomplete="off"></div>
+            </div>
+            <div>
+              <label for="expiry">Let it expire <span class="optional">OPTIONAL</span></label>
+              <input id="expiry" name="expiry" type="datetime-local">
+            </div>
+          </div>
+          <button id="submit-button" type="submit" class="primary-button"><span>Make my short link</span><span class="button-arrow" aria-hidden="true">↗</span></button>
+        </form>
+        <div class="privacy-note"><span class="privacy-icon" aria-hidden="true">♢</span><p>Your link can be shared with anyone. Your management token is private—think of it like a key.</p></div>
+        <div id="message" class="message" role="status" aria-live="polite" hidden></div>
+      </section>
+    </section>
+
+    <section id="result-panel" class="result-panel" hidden aria-labelledby="result-title">
+      <div class="result-heading">
+        <div><span class="section-kicker">ALL SET</span><h2 id="result-title">Your new link is ready.</h2><p>Give it a quick check, then share it with the world.</p></div>
+        <span class="success-icon" aria-hidden="true">✓</span>
+      </div>
+      <div class="short-url-row"><div class="short-url-wrap"><span class="field-caption">YOUR SHORT LINK</span><a id="short-url" href="#" target="_blank" rel="noopener noreferrer"></a></div><button id="copy-button" class="secondary-button" type="button">Copy link</button></div>
+      <div class="destination-row"><span class="field-caption">POINTS TO</span><span id="destination-url" class="destination-url"></span></div>
+      <div class="token-box"><div class="token-heading"><span class="token-heading-title"><span aria-hidden="true">♢</span> Your private management key</span><span class="warning-badge">KEEP SAFE</span></div><p>This key lets you view analytics and manage this link. Save a backup before you close the page.</p><div class="token-row"><code id="management-token"></code><button id="copy-token-button" class="text-button" type="button">Copy key</button></div></div>
+      <div class="manage-actions">
+        <button id="stats-button" class="secondary-button" type="button"><span aria-hidden="true">◷</span> View analytics</button>
+        <button id="share-button" class="secondary-button" type="button"><span aria-hidden="true">↗</span> Share</button>
+        <button id="download-backup-button" class="secondary-button" type="button"><span aria-hidden="true">↓</span> Download TXT backup</button>
+        <button id="disable-button" class="danger-button" type="button">Disable link</button>
+      </div>
+      <p class="backup-security-note">Your TXT backup includes the management key. Store it somewhere private.</p>
+      <div id="stats-output" class="stats-output" hidden></div>
+    </section>
+
+    <section class="history-panel" aria-labelledby="history-title">
+      <div class="history-heading">
+        <div class="history-heading-copy"><span class="section-kicker">YOUR LITTLE LINK LIBRARY</span><h2 id="history-title">Your links, all together.</h2><p class="history-copy">The links you’ve saved on this browser will show up here. Pick up where you left off, whenever you need.</p></div>
+        <button id="toggle-import-button" class="secondary-button import-open-button" type="button"><span aria-hidden="true">＋</span> Bring in an old link</button>
+      </div>
+
+      <div class="history-privacy-note"><span class="note-symbol" aria-hidden="true">i</span><p><strong>A little privacy note</strong><br>Your saved links and management keys stay in this browser. On a shared computer, remember to remove your links and keep backup files private.</p></div>
+
+      <form id="import-form" class="import-form" hidden>
+        <div class="import-form-heading"><div><span class="section-kicker">PICK UP WHERE YOU LEFT OFF</span><h3>Bring back a saved link</h3><p>Choose your TXT or JSON backup, or enter the details from an older link.</p></div><span class="round-icon" aria-hidden="true">↺</span></div>
+        <div class="backup-file-field">
+          <label for="import-backup-file">Upload a backup file</label>
+          <input id="import-backup-file" type="file" accept=".txt,.json,text/plain,application/json">
+          <p class="import-help">We’ll read the short code and management key from your SnapLink backup.</p>
+        </div>
+        <div class="or-divider"><span>OR ENTER THEM YOURSELF</span></div>
+        <div class="optional-grid">
+          <div><label for="import-code">Short code</label><input id="import-code" name="code" required maxlength="32" pattern="[A-Za-z0-9_-]{4,32}" placeholder="e.g. hello123" autocomplete="off"></div>
+          <div><label for="import-token">Management key</label><input id="import-token" name="management_token" type="password" required minlength="1" maxlength="256" placeholder="Paste your private key" autocomplete="off"></div>
+        </div>
+        <p class="import-help">We’ll verify the details with SnapLink before saving this link to your library.</p>
+        <div class="import-actions"><button id="import-submit-button" class="primary-button import-primary" type="submit">Verify and bring it back <span aria-hidden="true">→</span></button><button id="cancel-import-button" class="text-button" type="button">Maybe later</button></div>
+      </form>
+
+      <div id="history-empty" class="history-empty"><span class="empty-illustration" aria-hidden="true">↗</span><h3>Your link library is ready when you are.</h3><p>Create your first short link above, or bring an older one back with its backup file.</p></div>
+      <div id="history-list" class="history-list"></div>
+    </section>
+
+    <section id="how-it-works" class="feature-section" aria-label="How SnapLink works">
+      <div class="feature-section-heading"><span class="section-kicker">SMALL LINKS, LESS FUSS</span><h2>Everything you need. Nothing you don’t.</h2><p>A few thoughtful tools to help your links work a little harder.</p></div>
+      <div class="feature-strip">
+        <article class="feature-card"><div class="feature-icon lavender" aria-hidden="true">↗</div><div><h3>Share without the clutter</h3><p>Turn long, messy URLs into clean links that fit neatly in a post, bio, or message.</p></div><span class="feature-number">01</span></article>
+        <article class="feature-card"><div class="feature-icon green" aria-hidden="true">◷</div><div><h3>See what gets attention</h3><p>Check click counts and the latest visit to get a little context on your links.</p></div><span class="feature-number">02</span></article>
+        <article class="feature-card"><div class="feature-icon peach" aria-hidden="true">♢</div><div><h3>Stay in the driver’s seat</h3><p>Set an expiry, disable a link, or keep a private backup for another day.</p></div><span class="feature-number">03</span></article>
+      </div>
+    </section>
+
+    <div class="closing-note"><span aria-hidden="true">✳</span> Made for links that have places to be.</div>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <footer class="footer"><a class="footer-brand" href="/">snap<span>link</span></a><span>Keep it short. Keep it simple.</span><span>FastAPI <i>·</i> PostgreSQL <i>·</i> Tej</span><span>© <span id="year"></span> SnapLink</span></footer>
+</body>
+</html>

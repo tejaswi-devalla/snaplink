@@ -117,7 +117,7 @@ def test_rate_limit_is_enforced(client):
 
 
 def test_abuse_report_admin_review_and_link_disable(client):
-    data = create_link(client, custom_alias="report-target").json()
+    create_link(client, custom_alias="report-target")
     report = client.post(
         "/api/v1/reports",
         json={"code": "report-target", "category": "phishing", "details": "Fake login page"},

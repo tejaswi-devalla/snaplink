@@ -296,7 +296,8 @@ Look for missing environment variables, database connection failures, migration 
 ### TXT backup import fails
 
 - Make sure the selected file is a SnapLink backup, not an unrelated text file.
-- Do not remove the `--- IMPORT DATA (keep intact) ---` marker or the JSON data below it from a TXT backup.
+- Do not remove the `--- IMPORT DATA (keep intact) ---` marker or t
+he JSON data below it from a TXT backup.
 - Confirm the short code and management token still refer to a link that exists on the server.
 - Remember that importing verifies an existing link; it does not recreate a server-side link that has been deleted.
 
